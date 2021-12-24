@@ -1,7 +1,9 @@
 package com.itemdrops;
 
 import com.google.inject.Provides;
+
 import javax.inject.Inject;
+
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -11,43 +13,39 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.ClientToolbar;
+import net.runelite.client.ui.NavigationButton;
+import net.runelite.client.util.ImageUtil;
+
+import java.awt.image.BufferedImage;
 
 @Slf4j
 @PluginDescriptor(
-	name = "ItemDrops"
+        name = "Item Drops",
+        description = "Shows all monsters that drop a selected item"
 )
-public class ItemDropsPlugin extends Plugin
-{
-	@Inject
-	private Client client;
+public class ItemDropsPlugin extends Plugin {
+    @Inject
+    private Client client;
 
-	@Inject
-	private ItemDropsConfig config;
+    @Inject
+    private ClientToolbar clientToolbar;
 
-	@Override
-	protected void startUp() throws Exception
-	{
-		log.info("Example started!");
-	}
+    private NavigationButton navButton;
 
-	@Override
-	protected void shutDown() throws Exception
-	{
-		log.info("Example stopped!");
-	}
+    @Override
+    protected void startUp() {
+        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/icon.png");
+        navButton = NavigationButton.builder()
+                .tooltip("Item Drops")
+                .icon(icon)
+                .priority(7)
+                .build();
+        clientToolbar.addNavigation(navButton);
+    }
 
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
-	{
-		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
-		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
-		}
-	}
-
-	@Provides
-	ItemDropsConfig provideConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(ItemDropsConfig.class);
-	}
+    @Override
+    protected void shutDown() {
+        clientToolbar.removeNavigation(navButton);
+    }
 }
