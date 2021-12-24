@@ -1,2 +1,2 @@
-# Example
-An example greeter plugin
+# Item Drops
+Shows all monsters that drop a selected item.

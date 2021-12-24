@@ -1,13 +1,13 @@
-package com.example;
+package com.itemdrops;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class ItemDropsPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(ItemDropsPlugin.class);
 		RuneLite.main(args);
 	}
 }
