@@ -67,15 +67,14 @@ public class ItemDropsPlugin extends Plugin {
         clientToolbar.removeNavigation(navButton);
     }
 
-    ArrayList<ItemDrop> getItemDropSources(int itemId) {
+    void lookupItemDropSources(int itemId) {
         if (dropTablePerItem.containsKey(itemId)) {
+            String itemName = dropTablePerItem.get(itemId).getName();
             ArrayList<ItemDrop> itemDrops = dropTablePerItem.get(itemId).getDrops();
-            log.debug(itemDrops.toString());
-            return itemDrops;
+            panel.switchToResultsTab(itemName, itemDrops);
         }
         else {
-            log.debug("This item is not dropped by anyone :(");
+            log.info("This item is not dropped by anyone :(");
         }
-        return null;
     }
 }

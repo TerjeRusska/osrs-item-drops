@@ -45,7 +45,7 @@ class ItemPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                itemDropsPlugin.getItemDropSources(itemID);
+                itemDropsPlugin.lookupItemDropSources(itemID);
             }
         };
 

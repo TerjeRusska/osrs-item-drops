@@ -10,5 +10,5 @@ public class ItemDrop {
     private final Boolean members;
     private final String quantity;
     private final Boolean noted;
-    private final Float rarity;
+    private final Double rarity;
 }
