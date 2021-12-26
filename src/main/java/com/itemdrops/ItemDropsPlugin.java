@@ -1,16 +1,11 @@
 package com.itemdrops;
 
-import com.google.inject.Provides;
-
 import javax.inject.Inject;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
@@ -25,21 +20,26 @@ import java.awt.image.BufferedImage;
         description = "Shows all monsters that drop a selected item"
 )
 public class ItemDropsPlugin extends Plugin {
-    @Inject
-    private Client client;
 
     @Inject
     private ClientToolbar clientToolbar;
 
+    @Getter(AccessLevel.PACKAGE)
     private NavigationButton navButton;
+
+    @Getter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.PACKAGE)
+    private ItemDropsPanel panel;
 
     @Override
     protected void startUp() {
+        panel = injector.getInstance(ItemDropsPanel.class);
         final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/icon.png");
         navButton = NavigationButton.builder()
                 .tooltip("Item Drops")
                 .icon(icon)
                 .priority(7)
+                .panel(panel)
                 .build();
         clientToolbar.addNavigation(navButton);
     }
