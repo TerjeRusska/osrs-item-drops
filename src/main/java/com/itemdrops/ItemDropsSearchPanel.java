@@ -28,6 +28,7 @@ class ItemDropsSearchPanel extends JPanel {
 
     private final ClientThread clientThread;
     private final ItemManager itemManager;
+    private final ItemDropsPlugin itemDropsPlugin;
 
     private final IconTextField searchBar = new IconTextField();
     /*  The results container, this will hold all the individual ge item panels */
@@ -40,9 +41,10 @@ class ItemDropsSearchPanel extends JPanel {
     private final List<Item> itemsList = new ArrayList<>();
 
     @Inject
-    ItemDropsSearchPanel(ClientThread clientThread, ItemManager itemManager, ScheduledExecutorService executor) {
+    ItemDropsSearchPanel(ClientThread clientThread, ItemManager itemManager, ScheduledExecutorService executor, ItemDropsPlugin itemDropsPlugin) {
         this.clientThread = clientThread;
         this.itemManager = itemManager;
+        this.itemDropsPlugin = itemDropsPlugin;
 
         setLayout(new BorderLayout());
         setBackground(ColorScheme.DARK_GRAY_COLOR);
@@ -150,7 +152,7 @@ class ItemDropsSearchPanel extends JPanel {
             final int haPrice = itemComp.getHaPrice();
             AsyncBufferedImage itemImage = itemManager.getImage(itemId);
 
-            itemsList.add(new Item(itemImage, item.getName(), itemId, haPrice));
+            itemsList.add(new Item(itemImage, item.getName(), itemId, haPrice, null));
 
             // If using hotkey to lookup item, stop after finding match.
             if (exactMatch && item.getName().equalsIgnoreCase(lookup)) {
@@ -162,7 +164,7 @@ class ItemDropsSearchPanel extends JPanel {
         {
             int index = 0;
             for (Item item : itemsList) {
-                ItemPanel panel = new ItemPanel(item.getIcon(), item.getName(),
+                ItemPanel panel = new ItemPanel(itemDropsPlugin, item.getIcon(), item.getName(),
                         item.getItemId(), item.getHaPrice());
 
 				/*

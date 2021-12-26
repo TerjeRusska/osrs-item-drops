@@ -1,6 +1,7 @@
 package com.itemdrops;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
 import net.runelite.client.ui.components.materialtabs.MaterialTab;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+@Slf4j
 class ItemDropsPanel extends PluginPanel {
 
     private final JPanel display = new JPanel();
@@ -24,7 +26,6 @@ class ItemDropsPanel extends PluginPanel {
     @Inject
     ItemDropsPanel(ItemDropsSearchPanel searchPanel) {
         super(false);
-
         this.searchPanel = searchPanel;
 
         setLayout(new BorderLayout());

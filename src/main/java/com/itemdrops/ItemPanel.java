@@ -15,7 +15,7 @@ import java.util.List;
 class ItemPanel extends JPanel {
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
 
-    ItemPanel(AsyncBufferedImage icon, String name, int itemID, int haPrice) {
+    ItemPanel(ItemDropsPlugin itemDropsPlugin, AsyncBufferedImage icon, String name, int itemID, int haPrice) {
         BorderLayout layout = new BorderLayout();
         layout.setHgap(5);
         setLayout(layout);
@@ -45,7 +45,7 @@ class ItemPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //grandExchangePlugin.openGeLink(name, itemID);
+                itemDropsPlugin.getItemDropSources(itemID);
             }
         };
 
